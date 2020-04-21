@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -87,7 +88,8 @@ public class CodeGenerator extends AutoGenerator {
 				boolean isDone = false;
 				do {
 					System.out.println("[INFO] Entity: " + tableInfo.getEntityName() + ",  Mapper: "
-							+ tableInfo.getMapperName() + ", Service: " + tableInfo.getServiceName());
+							+ tableInfo.getMapperName() + ", Service: " + tableInfo.getServiceName() + ", Controller: "
+							+ tableInfo.getControllerName());
 					String yes = scanner("Generate codes with options above? (Y/N)");
 					if ("Y".equals(yes) || "y".equals(yes)) {
 						isDone = true;
@@ -105,14 +107,19 @@ public class CodeGenerator extends AutoGenerator {
 					}
 				} while (!isDone);
 			}
-			/*
-			 * // 设置 CONTROLLER_PATH 为null，不生成 controller的时候需要使用
-			 * config.getPathInfo().put(ConstVal.CONTROLLER_PATH, null);
-			 * config.getPathInfo().forEach((key, value) -> { if (value != null)
-			 * { File dir = new File(value); if (!dir.exists()) { boolean result
-			 * = dir.mkdirs(); if (result) { log.debug("创建目录： [" + value + "]");
-			 * } } } });
-			 */
+			// 设置 CONTROLLER_PATH 为null，不生成 controller的时候需要使用
+			// config.getPathInfo().put(ConstVal.CONTROLLER_PATH, null);
+			config.getPathInfo().forEach((key, value) -> {
+				if (value != null) {
+					File dir = new File(value);
+					if (!dir.exists()) {
+						boolean result = dir.mkdirs();
+						if (result) {
+							log.debug("创建目录： [" + value + "]");
+						}
+					}
+				}
+			});
 			// 初始化配置
 			if (null != injectionConfig) {
 				injectionConfig.setConfig(config);
@@ -129,9 +136,8 @@ public class CodeGenerator extends AutoGenerator {
 	}
 
 	private static void generate(String moduleName, String tableName) {
-		// String tablePrefix = tableName.substring(0,
-		// tableName.indexOf('_') == -1 ? tableName.length() :
-		// tableName.indexOf('_'));// 表名带有下划线，这里可以参考mp官网进行修改
+		String tablePrefix = tableName.substring(0,
+				tableName.indexOf('_') == -1 ? tableName.length() : tableName.indexOf('_'));// 表名带有下划线，这里可以参考mp官网进行修改
 
 		// 代码生成器
 		CodeGenerator generator = new CodeGenerator();
@@ -193,13 +199,13 @@ public class CodeGenerator extends AutoGenerator {
 		StrategyConfig strategy = new StrategyConfig();
 		strategy.setNaming(NamingStrategy.underline_to_camel);
 		strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-		// strategy.setTablePrefix(tablePrefix);
+		strategy.setTablePrefix(tablePrefix);
 		strategy.setEntityLombokModel(true);
 		strategy.setRestControllerStyle(true);
 		strategy.setEnableSqlFilter(false);
 
 		// 写于父类中的公共字段
-		strategy.setSuperEntityColumns("id");
+//		strategy.setSuperEntityColumns("id");
 		strategy.setInclude(tableName.split(","));
 		strategy.setControllerMappingHyphenStyle(true);
 		generator.setStrategy(strategy);

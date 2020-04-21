@@ -2,3 +2,13 @@
 spring:
   profiles:
     active: dev
+  # ÈÈ²¿Êğ
+  devtools:
+    livereload:
+      enabled: true
+#mybaits-plusÅäÖÃ
+mybatis-plus:
+  mapperLocations: classpath:mapper/**/*.xml
+  global-config:
+    banner: false
+  type-aliases-package: com.company.project.**.entity

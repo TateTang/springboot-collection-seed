@@ -1,15 +1,17 @@
 package com.company.project.modules.user.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author tangmf
@@ -18,20 +20,27 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("user")
+@TableName("t_user")
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String username;
+	@TableId("id")
+	private Integer id;
 
-    private String password;
+	@TableField("username")
+	private String username;
 
-    private String nickName;
+	@TableField("password")
+	private String password;
 
-    private Integer sex;
+	@TableField("nick_name")
+	private String nickName;
 
-    private LocalDateTime registerDate;
+	@TableField("sex")
+	private Integer sex;
 
+	@TableField("register_date")
+	private LocalDateTime registerDate;
 
 }
