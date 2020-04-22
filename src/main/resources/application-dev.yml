@@ -33,7 +33,13 @@ spring:
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # 合并多个DruidDataSource的监控数据
       use-global-data-source-stat: true
-
+  # 热部署
+  devtools:
+    restart:
+      enabled: true #设置开启热部署
+      additional-paths: src/main/java #需要实时更新的目录
+  # freemarker:
+  #   cache: false #页面不加载缓存，修改即时生效
 
 
 

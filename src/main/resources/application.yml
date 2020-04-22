@@ -1,14 +1,20 @@
-# ËùÓĞ»·¾³Í¨ÓÃµÄÅäÖÃ£¬·ÅÔÚÕâÀï
+# æ‰€æœ‰ç¯å¢ƒé€šç”¨çš„é…ç½®ï¼Œæ”¾åœ¨è¿™é‡Œ
 spring:
   profiles:
     active: dev
-  # ÈÈ²¿Êğ
-  devtools:
-    livereload:
-      enabled: true
-#mybaits-plusÅäÖÃ
+
+
+# mybaits-plusé…ç½®
 mybatis-plus:
   mapperLocations: classpath:mapper/**/*.xml
   global-config:
     banner: false
   type-aliases-package: com.company.project.**.entity
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #æ§åˆ¶å°æ‰“å°å®Œæ•´å¸¦å‚æ•°SQLè¯­å¥
+
+# é…ç½®æ—¥å¿—è¾“å‡ºçš„çº§åˆ«
+logging:
+  level:
+    com.company.project: debug
+    org.springframework.cache: trace

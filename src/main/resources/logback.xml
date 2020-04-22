@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+
+  <!--打印logback初始化日志系统信息，debug="true"是同等效果-->
+  <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>-->
+  <!-- 将日志输出在当前项目的根目录下 -->
+  <property name="contextPath" value="./logs"/>
+  <!-- 日志的上下文路径 -->
+  <property name="logPath" value="${contextPath}"/>
+  <!-- 配置日志的滚动时间 -->
+  <property name="maxHistory" value="120"/>
+
+  <!-- 彩色日志 -->
+  <!-- 彩色日志依赖的渲染类 -->
+  <conversionRule conversionWord="clr"
+    converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+  <conversionRule conversionWord="wex"
+    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+  <conversionRule conversionWord="wEx"
+    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+  <!-- 彩色日志格式 -->
+  <property name="CONSOLE_LOG_PATTERN"
+    value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+  <!-- 打印日志到控制台 -->
+  <appender name="rootConsole" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter"/>
+    <!-- encoder 在控制台打印日志的格式 -->
+    <encoder>
+      <!--<pattern>[XD][%4p] %d{yyyy-MM-dd HH:mm:ss} [%t] %c{0}#%M:%L - %m%n</pattern>-->
+      <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+      <!-- 设置字符集 -->
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <!--定义日志的输出方式:输出在文件夹info文件夹中，配置所有类INFO级别的滚动日志-->
+  <appender name="rootRollingInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logPath}/info/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+      <!-- 设置日志的滚动时间 -->
+      <maxHistory>${maxHistory}</maxHistory>
+      <!--日志文件保留天数-->
+      <MaxHistory>30</MaxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>[XD][%5p] %d{yyyy-MM-dd HH:mm:ss} [%t] %c{0}#%M:%L - %m%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+    <!-- LevelFilter:严格限制日志的输出级别,使用LevelFilter设置,只会在文件中出现级别为INFO级别的日志内容。 -->
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>INFO</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+  </appender>
+
+  <!--
+       定义日志的输出方式:输出在文件夹error.log文件中
+       配置所有类ERROR级别的滚动日志
+   -->
+  <appender name="rootRollingError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logPath}/error/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+      <!-- 设置日志的滚动时间 -->
+      <maxHistory>${maxHistory}</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>[XD][%4p] %d{yyyy-MM-dd HH:mm:ss} [%t] %c{0}#%M:%L - %m%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+    <!-- error.log文件中的日志级别是 ERROR以上的级别 -->
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+  </appender>
+
+  <!-- 流程记录日志配置 -->
+  <appender name="process" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logPath}/process/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+      <!-- 设置日志的滚动时间 -->
+      <maxHistory>${maxHistory}</maxHistory>
+      <!--日志文件保留天数-->
+      <MaxHistory>30</MaxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>[XD][%5p] %d{yyyy-MM-dd HH:mm:ss} [%t] %c{0}#%M:%L - %m%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <!-- 默认打印级别 -->
+  <root level="info">
+    <appender-ref ref="rootConsole"/>
+    <appender-ref ref="rootRollingInfo"/>
+    <appender-ref ref="rootRollingError"/>
+    <appender-ref ref="process"/>
+  </root>
+
+  <!--name:用来指定受此loger约束的某一个包或者具体的某一个类。-->
+  <!--level:代表强制执行上级的级别-->
+  <!--addtivity:是否向上级loger传递打印信息。默认是true (是loger的优先级高于root)-->
+  <logger name="com" level="INFO" additivity="false">
+    <appender-ref ref="rootConsole"/>
+    <appender-ref ref="rootRollingInfo"/>
+    <appender-ref ref="rootRollingError"/>
+  </logger>
+
+</configuration>

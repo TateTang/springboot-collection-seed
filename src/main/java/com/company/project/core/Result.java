@@ -1,6 +1,7 @@
 package com.company.project.core;
 
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
 /**
@@ -9,36 +10,30 @@ import lombok.Data;
  * @Description 统一API响应结果封装
  */
 @Data
-public class Result<T> {
+public class Result {
 	// 时间戳
 	private long timestamp = System.currentTimeMillis();
-
-	// 返回码
-	private int code;
 
 	// 消息
 	private String message;
 
+	// 返回码
+	private ResultCode code = ResultCode.SUCCESS;
+
 	// 数据
-	private T data;
+	private Object data;
 
-	public Result setCode(ResultCode resultCode) {
-		this.code = resultCode.getCode();
-		return this;
+	public int getCode() {
+		return code.getCode();
 	}
 
-	public Result setMessage(String message) {
-		this.message = message;
-		return this;
-	}
-
-	public Result setData(T data) {
-		this.data = data;
-		return this;
-	}
-
-	@Override
 	public String toString() {
-		return JSON.toJSONString(this);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
