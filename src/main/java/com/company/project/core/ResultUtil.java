@@ -35,7 +35,7 @@ public class ResultUtil {
         return ResultUtil.fail(code, data, "");
     }
 
-    public static Result fail(ResultCode code, Object data, String message) {
+    private static Result fail(ResultCode code, Object data, String message) {
         Result result = new Result();
         result.setCode(code);
         result.setData(data);
