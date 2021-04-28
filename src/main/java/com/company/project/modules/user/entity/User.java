@@ -3,11 +3,12 @@ package com.company.project.modules.user.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -23,24 +24,24 @@ import lombok.experimental.Accessors;
 @TableName("t_user")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@TableId("id")
-	private Integer id;
+    @TableId("id")
+    private Integer id;
 
-	@TableField("username")
-	private String username;
+    @TableField("username")
+    private String username;
 
-	@TableField("password")
-	private String password;
+    @TableField("password")
+    private String password;
 
-	@TableField("nick_name")
-	private String nickName;
+    @TableField("nick_name")
+    private String nickName;
 
-	@TableField("sex")
-	private Integer sex;
+    @TableField("sex")
+    private Integer sex;
 
-	@TableField("register_date")
-	private LocalDateTime registerDate;
+    @TableField("register_date")
+    private LocalDateTime registerDate;
 
 }

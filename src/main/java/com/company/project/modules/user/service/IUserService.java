@@ -1,8 +1,7 @@
 package com.company.project.modules.user.service;
 
-import com.company.project.modules.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import java.util.List;
+import com.company.project.modules.user.entity.User;
 
 /**
  * <p>
@@ -13,14 +12,15 @@ import java.util.List;
  * @since 2020-04-21
  */
 public interface IUserService extends IService<User> {
-	/**
-	 * 插入一条记录
-	 *
-	 * @param user，对象
-	 */
-	boolean createUser(User user);
-	/**
-	 * 根据id查询用户信息
-	 */
-	User getUserById(int userId);
+    /**
+     * 插入一条记录
+     *
+     * @param user，对象
+     */
+    boolean createUser(User user);
+
+    /**
+     * 根据id查询用户信息
+     */
+    User getUserById(int userId);
 }

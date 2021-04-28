@@ -5,24 +5,17 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.AbstractTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * @Author tangmf
@@ -53,7 +46,7 @@ public class CodeGenerator extends AutoGenerator {
 		System.out.println(("Please input " + tip + ": "));
 		if (scanner.hasNext()) {
 			String ipt = scanner.next();
-			if (StringUtils.isNotEmpty(ipt)) {
+			if (StringUtils.isNotBlank(ipt)) {
 				return ipt;
 			}
 		}
@@ -79,7 +72,7 @@ public class CodeGenerator extends AutoGenerator {
 
 			List<TableInfo> tableInfoList = config.getTableInfoList();
 			if (tableInfoList.size() <= 0) {
-				System.out.println("Table(s) " + Arrays.toString(strategy.getInclude()) + " not exist!");
+				System.out.println("Table(s) " + Arrays.toString(new Set[]{strategy.getInclude()}) + " not exist!");
 				return;
 			}
 			// 设置所有的entity都展示@TableName注解，展示是哪张数据库表

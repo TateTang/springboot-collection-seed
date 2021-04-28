@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-	@Override
-	public boolean createUser(User user) {
-		return this.save(user);
-	}
+    @Override
+    public boolean createUser(User user) {
+        return this.save(user);
+    }
 
-	@Override
-	public User getUserById(int userId) {
-		return this.baseMapper.selectById(userId);
-	}
+    @Override
+    public User getUserById(int userId) {
+        return this.baseMapper.selectById(userId);
+    }
 }

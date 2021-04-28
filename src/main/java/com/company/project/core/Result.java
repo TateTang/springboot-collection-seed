@@ -11,29 +11,29 @@ import lombok.Data;
  */
 @Data
 public class Result {
-	// 时间戳
-	private long timestamp = System.currentTimeMillis();
+    // 时间戳
+    private long timestamp = System.currentTimeMillis();
 
-	// 消息
-	private String message;
+    // 消息
+    private String message;
 
-	// 返回码
-	private ResultCode code = ResultCode.SUCCESS;
+    // 返回码
+    private ResultCode code = ResultCode.SUCCESS;
 
-	// 数据
-	private Object data;
+    // 数据
+    private Object data;
 
-	public int getCode() {
-		return code.getCode();
-	}
+    public int getCode() {
+        return code.getCode();
+    }
 
-	public String toString() {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
